@@ -1,18 +1,18 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import Home from './pages/Home';
-import Search from './pages/Search';
-import './App.css';
+import React from "react";
+import { Route, BrowserRouter as Router } from "react-router-dom";
+import Home from "./pages/home/Home";
+import Search from "./pages/search/Search";
+import "./App.css";
 
 function App() {
-	return (
-		<div className="App">
-			<Switch>
-				<Route path="/" exact component={Home} />
-				<Route path="/search" component={Search} />
-			</Switch>
-		</div>
-	);
+  return (
+    <div className="App">
+      <Router>
+        <Route path="/" exact component={Home} />
+        <Route path="/search" component={Search} />
+      </Router>
+    </div>
+  );
 }
 
 export default App;
