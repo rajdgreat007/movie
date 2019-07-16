@@ -1,17 +1,29 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+import SearchBar from "../../components/SearchBar";
 import "./Home.css";
 import logo from "../../logo.png";
 
-const Home = () => {
-  return (
-    <div className="Home">
-      <header className="Home-header">
-        <img src={logo} className="Home-logo" alt="logo" />
-      </header>
-      <Link to="/search">Search</Link>
-    </div>
-  );
-};
+class Home extends React.Component {
+  state = { redirect: false, searchTerm: "" };
+
+  onSearchSubmit = searchTerm => {
+    this.setState({ redirect: true, searchTerm });
+  };
+
+  render() {
+    if (this.state.redirect) {
+      return <Redirect to={`/search/${this.state.searchTerm}`} />;
+    }
+    return (
+      <div className="Home">
+        <header className="Home-header">
+          <img src={logo} className="Home-logo" alt="logo" />
+        </header>
+        <SearchBar onSearchSubmit={this.onSearchSubmit} />
+      </div>
+    );
+  }
+}
 
 export default Home;

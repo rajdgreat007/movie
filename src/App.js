@@ -9,7 +9,7 @@ function App() {
     <div className="App">
       <Router>
         <Route path="/" exact component={Home} />
-        <Route path="/search" component={Search} />
+        <Route path="/search/:searchTerm" component={Search} />
       </Router>
     </div>
   );
