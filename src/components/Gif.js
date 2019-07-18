@@ -24,6 +24,10 @@ class Gif extends React.Component {
       </div>
     );
   }
+
+  componentWillUnmount() {
+    this.imageRef.current.removeEventListener("load", this.onLoadImage);
+  }
 }
 
 export default Gif;

@@ -10,13 +10,21 @@ import "./Search.css";
 class Search extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.defaultState = {
       gifs: [],
       offset: 0,
-      fetching: false
+      fetching: false,
+      searchTerm: "",
+      totalCount: 0
     };
 
-    this.totalCount = 0;
+    this.state = {
+      ...this.defaultState,
+      searchTerm: this.props.match.params.searchTerm
+    };
+
+    window.history.pushState(this.state, "", this.state.searchTerm);
+
     this.containerRef = React.createRef();
     this.throttleFunction = throttle(this.handleScroll, 500);
   }
@@ -24,6 +32,13 @@ class Search extends React.Component {
   componentDidMount() {
     this.fetchData();
     this.containerRef.current.addEventListener("scroll", this.throttleFunction);
+    window.onpopstate = event => {
+      if (event.state) {
+        this.setState({ ...event.state }, () => {
+          this.fetchData();
+        });
+      }
+    };
   }
 
   handleScroll = () => {
@@ -32,7 +47,7 @@ class Search extends React.Component {
       container.scrollHeight - container.scrollTop <
         container.clientHeight + 300 &&
       !this.state.fetching &&
-      this.state.offset < this.totalCount
+      this.state.offset < this.state.totalCount
     ) {
       this.setState({ fetching: true });
       this.fetchData();
@@ -50,21 +65,24 @@ class Search extends React.Component {
       });
       return;
     }
-    const searchTerm = this.props.match.params.searchTerm;
-    if (searchTerm) {
-      const url = getUrl(searchTerm, this.state.offset, LIMIT);
+
+    if (this.state.searchTerm) {
+      const url = getUrl(this.state.searchTerm, this.state.offset, LIMIT);
       axios
         .get(url)
         .then(response => {
-          this.setState(state => {
+          this.setState(prevState => {
+            const totalCount = response.data.pagination.total_count;
             return {
-              gifs: state.gifs.concat(response.data.data),
-              offset: state.offset + LIMIT,
-              fetching: false
+              gifs: prevState.gifs.concat(response.data.data),
+              offset: prevState.offset + LIMIT,
+              fetching: false,
+              totalCount:
+                prevState.totalCount !== totalCount
+                  ? totalCount
+                  : prevState.totalCount
             };
           });
-          if (!this.totalCount)
-            this.totalCount = response.data.pagination.total_count;
         })
         .catch(error => {
           console.log(error);
@@ -72,10 +90,21 @@ class Search extends React.Component {
     }
   };
 
+  onSearchSubmit = searchTerm => {
+    const newState = {
+      ...this.defaultState,
+      searchTerm
+    };
+    this.setState(newState, () => {
+      window.history.pushState(newState, "", searchTerm);
+      this.fetchData();
+    });
+  };
+
   render() {
     return (
       <div>
-        <SearchBar />
+        <SearchBar onSearchSubmit={this.onSearchSubmit} />
         <div className="Gifs" ref={this.containerRef}>
           {this.state.gifs.map(gif => {
             return <Gif src={gif.images.original.url} key={gif.id} />;
@@ -90,6 +119,7 @@ class Search extends React.Component {
       "scroll",
       this.throttleFunction
     );
+    window.onpopstate = null;
   }
 }
 
