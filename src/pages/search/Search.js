@@ -103,7 +103,7 @@ class Search extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="Search">
         <SearchBar onSearchSubmit={this.onSearchSubmit} />
         <div className="Gifs" ref={this.containerRef}>
           {this.state.gifs.map(gif => {

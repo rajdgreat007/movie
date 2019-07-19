@@ -7,21 +7,19 @@ class SearchBar extends React.Component {
   render() {
     return (
       <div className="SearchBar">
-        <div className="SearchInput">
-          <input
-            type="text"
-            value={this.state.searchTerm}
-            onChange={e => this.setState({ searchTerm: e.target.value })}
-            placeholder="Search for gif"
-          />
-        </div>
-        <div className="SearchButton">
-          <input
-            type="button"
-            value="search"
-            onClick={() => this.props.onSearchSubmit(this.state.searchTerm)}
-          />
-        </div>
+        <input
+          type="text"
+          className="SearchInput"
+          value={this.state.searchTerm}
+          onChange={e => this.setState({ searchTerm: e.target.value })}
+          placeholder="Search for an awesome gif"
+        />
+        <button
+          className="SearchButton"
+          onClick={() => this.props.onSearchSubmit(this.state.searchTerm)}
+        >
+          <i className="material-icons">search</i>
+        </button>
       </div>
     );
   }
