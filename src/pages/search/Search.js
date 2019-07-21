@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, BrowserRouter } from "react-router-dom";
 import throttle from "lodash.throttle";
 import Gif from "../../components/Gif";
 import SearchBar from "../../components/SearchBar";
@@ -117,9 +117,11 @@ class Search extends React.Component {
     return (
       <div className="Search">
         <div className="Logo">
-          <Link to="/">
-            <img src={logo} alt="logo" />
-          </Link>
+          <BrowserRouter>
+            <Link to="/">
+              <img src={logo} alt="logo" />
+            </Link>
+          </BrowserRouter>
         </div>
 
         <SearchBar onSearchSubmit={this.onSearchSubmit} />
