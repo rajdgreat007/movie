@@ -14,7 +14,7 @@ describe("Home Component", () => {
   });
 
   it("renders logo", () => {
-    expect(HomeComponent.find("img").hasClass("Home-logo")).toEqual(true);
+    expect(HomeComponent.find("img").hasClass("Logo")).toEqual(true);
   });
 
   it("renders search bar", () => {

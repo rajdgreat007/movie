@@ -19,7 +19,7 @@ class Home extends React.Component {
     return (
       <div className="Home">
         <header className="Home-header">
-          <img src={logo} className="Home-logo" alt="logo" />
+          <img src={logo} className="Logo" alt="logo" />
         </header>
         <SearchBar onSearchSubmit={this.onSearchSubmit} />
       </div>
