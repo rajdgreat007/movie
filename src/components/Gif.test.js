@@ -15,6 +15,10 @@ describe("Gif Component", () => {
     expect(GifComponent.find("img")).toHaveLength(1);
   });
 
+  it("should update rows in state after image is rendered", () => {
+    expect(GifComponent.state().rows).toEqual(0);
+  });
+
   it("sets image src when passed through props", () => {
     const imgSrc = "www.abc.com/awesome.gif";
     GifComponent.setProps({ src: imgSrc });

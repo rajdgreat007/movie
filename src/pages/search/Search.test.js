@@ -34,4 +34,28 @@ describe("Search Component", () => {
     SearchComponent.setState(defaultState);
     expect(SearchComponent.state().gifs).toHaveLength(20);
   });
+
+  it("sets state with mock data when setStateWithMockData function is called", () => {
+    SearchComponent.setState({ gifs: [] });
+    SearchComponent.instance().setStateWithMockData();
+    expect(SearchComponent.state().gifs).toHaveLength(20);
+  });
+
+  it("sets search text correctly when user clicks back button (onpopstate event)", () => {
+    const searchTerm = "happy";
+    const event = { state: { searchTerm } };
+    global.window.onpopstate(event);
+    expect(SearchComponent.state().searchTerm).toEqual(searchTerm);
+  });
+
+  it("sets fetching to true in state when scroll event callback is called", () => {
+    SearchComponent.instance().handleScroll();
+    expect(SearchComponent.state().fetching).toEqual(true);
+  });
+
+  it("sets searchTerm in state correctly when onSearchSubmit is called", () => {
+    const searchTerm = "happy";
+    SearchComponent.instance().onSearchSubmit(searchTerm);
+    expect(SearchComponent.state().searchTerm).toEqual(searchTerm);
+  });
 });

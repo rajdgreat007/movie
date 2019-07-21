@@ -25,4 +25,9 @@ describe("Home Component", () => {
     HomeComponent.setState({ redirect: true });
     expect(HomeComponent.find("Redirect")).toHaveLength(1);
   });
+
+  it("sets redirect flag to true in state when onSearchSubmit is called", () => {
+    HomeComponent.instance().onSearchSubmit("happy");
+    expect(HomeComponent.state().redirect).toEqual(true);
+  });
 });

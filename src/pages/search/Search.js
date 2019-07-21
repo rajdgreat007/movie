@@ -54,15 +54,38 @@ class Search extends React.Component {
     }
   };
 
+  setStateWithMockData = () => {
+    this.setState(state => {
+      return {
+        gifs: state.gifs.concat(mockImagesFn()),
+        offset: state.offset + LIMIT,
+        fetching: false
+      };
+    });
+  };
+
+  handleFetchResponse = response => {
+    this.setState(prevState => {
+      const totalCount = response.data.pagination.total_count;
+      return {
+        gifs: prevState.gifs.concat(response.data.data),
+        offset: prevState.offset + LIMIT,
+        fetching: false,
+        totalCount:
+          prevState.totalCount !== totalCount
+            ? totalCount
+            : prevState.totalCount
+      };
+    });
+  };
+
+  handleFetchError = error => {
+    console.log(error);
+  };
+
   fetchData = () => {
     if (useMockData) {
-      this.setState(state => {
-        return {
-          gifs: state.gifs.concat(mockImagesFn()),
-          offset: state.offset + LIMIT,
-          fetching: false
-        };
-      });
+      this.setStateWithMockData();
       return;
     }
 
@@ -70,35 +93,22 @@ class Search extends React.Component {
       const url = getUrl(this.state.searchTerm, this.state.offset, LIMIT);
       axios
         .get(url)
-        .then(response => {
-          this.setState(prevState => {
-            const totalCount = response.data.pagination.total_count;
-            return {
-              gifs: prevState.gifs.concat(response.data.data),
-              offset: prevState.offset + LIMIT,
-              fetching: false,
-              totalCount:
-                prevState.totalCount !== totalCount
-                  ? totalCount
-                  : prevState.totalCount
-            };
-          });
-        })
-        .catch(error => {
-          console.log(error);
-        });
+        .then(response => this.handleFetchResponse(response))
+        .catch(error => this.handleFetchError(error));
     }
   };
 
   onSearchSubmit = searchTerm => {
-    const newState = {
-      ...this.defaultState,
-      searchTerm
-    };
-    this.setState(newState, () => {
-      window.history.pushState(newState, "", searchTerm);
-      this.fetchData();
-    });
+    if (searchTerm) {
+      const newState = {
+        ...this.defaultState,
+        searchTerm
+      };
+      this.setState(newState, () => {
+        window.history.pushState(newState, "", searchTerm);
+        this.fetchData();
+      });
+    }
   };
 
   render() {
