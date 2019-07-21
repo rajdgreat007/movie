@@ -1,3 +1,21 @@
+.Search {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.Search .Logo {
+  width: 13%;
+}
+
+.Search .Logo img {
+  width: 100%;
+}
+
+.Search .SearchBar {
+  width: 87%;
+}
+
 .Search .SearchInput {
   flex: 1;
 }
@@ -8,5 +26,6 @@
   grid-gap: 0 10px;
   grid-auto-rows: 10px;
   overflow-y: scroll;
-  height: 800px;
+  height: 90vh;
+  width: 100%;
 }

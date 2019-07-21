@@ -1,11 +1,13 @@
 import React from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import throttle from "lodash.throttle";
 import Gif from "../../components/Gif";
 import SearchBar from "../../components/SearchBar";
 import { getUrl, LIMIT, useMockData } from "../../utils/utils";
 import mockImagesFn from "../../mock/images";
 import "./Search.css";
+import logo from "../../logo.png";
 
 class Search extends React.Component {
   constructor(props) {
@@ -114,6 +116,12 @@ class Search extends React.Component {
   render() {
     return (
       <div className="Search">
+        <div className="Logo">
+          <Link to="/">
+            <img src={logo} alt="logo" />
+          </Link>
+        </div>
+
         <SearchBar onSearchSubmit={this.onSearchSubmit} />
         <div className="Gifs" ref={this.containerRef}>
           {this.state.gifs.map(gif => {
