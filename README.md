@@ -1,68 +1,53 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Setup instructions
 
-## Available Scripts
+Copy the 'gifted' folder to local machine.
 
-In the project directory, you can run:
+Navigate to 'gifted' folder - `cd gifted`
 
-### `npm start`
+Run dev server - `npm start`
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Navigate to [`http://localhost:3000`](http://localhost:3000) to view the running application
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+See code coverage - `npm test -- --coverage --watchAll=false`
 
-### `npm test`
+# Overview of React components created
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The project contains following components :
 
-### `npm run build`
+## Home Component
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+It is responsible for rendering the landing page (Home Page) which has a logo & search box.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## Search Component
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+While on home page when user enters query in serch box and hits enter, Search page opens up which is powered by Search Component.
 
-### `npm run eject`
+It has logo, searchbox & grid of gif images.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+In first hit it will load 20 images (which can be configured).
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Scroll Pagination - As user scrolls to the bottom of page, it again fetches next 20 images and so on.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Gif Component
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+It is responsible for rendering the grid of images on search page.
 
-## Learn More
+Gif images are paused by default and it displays the control to play the gif.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## SearchBar Component
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+It is responsible for rendering search box on Home & Search pages. It can be controlled using keyboard/mouse.
 
-### Code Splitting
+# Any extra works that you made and why it is important.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+## Scroll Pagination
 
-### Analyzing the Bundle Size
+helps user to effortlessly see content just by scrolling and without clicking any button
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+## Accessibility
 
-### Making a Progressive Web App
+user can navigate with keyboard
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+## Test Coverage
 
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+More than 80%
