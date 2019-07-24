@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Gifffer from "gifffer";
-import { Link, BrowserRouter } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import throttle from "lodash.throttle";
 import Gif from "../../components/Gif";
 import SearchBar from "../../components/SearchBar";
@@ -25,7 +25,8 @@ class Search extends React.Component {
     this.state = {
       ...this.defaultState,
       loading: false,
-      searchTerm: this.props.match.params.searchTerm
+      searchTerm: this.props.match.params.searchTerm,
+      redirectToHome: false
     };
 
     window.history.pushState(this.state, "", this.state.searchTerm);
@@ -129,14 +130,17 @@ class Search extends React.Component {
   };
 
   render() {
+    if (this.state.redirectToHome) {
+      return <Redirect to="/" />;
+      //using this hack instead of <Link> because of a bug in react-router-dom that breaks tests
+    }
     return (
       <div className="Search">
-        <div className="Logo">
-          <BrowserRouter>
-            <Link to="/">
-              <img src={logo} alt="logo" />
-            </Link>
-          </BrowserRouter>
+        <div
+          className="Logo"
+          onClick={e => this.setState({ redirectToHome: true })}
+        >
+          <img src={logo} alt="logo" />
         </div>
 
         <SearchBar onSearchSubmit={this.onSearchSubmit} />
@@ -158,10 +162,11 @@ class Search extends React.Component {
   }
 
   componentWillUnmount() {
-    this.containerRef.current.removeEventListener(
-      "scroll",
-      this.throttleFunction
-    );
+    this.containerRef.current &&
+      this.containerRef.current.removeEventListener(
+        "scroll",
+        this.throttleFunction
+      );
     window.onpopstate = null;
     window.removeEventListener("load", this.handleLoad);
   }
