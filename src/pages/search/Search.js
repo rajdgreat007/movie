@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import Gifffer from "gifffer";
 import { Link, BrowserRouter } from "react-router-dom";
 import throttle from "lodash.throttle";
 import Gif from "../../components/Gif";
@@ -41,7 +42,12 @@ class Search extends React.Component {
         });
       }
     };
+    window.addEventListener("load", this.handleLoad);
   }
+
+  handleLoad = () => {
+    Gifffer();
+  };
 
   handleScroll = () => {
     const container = this.containerRef.current;
@@ -79,6 +85,7 @@ class Search extends React.Component {
             : prevState.totalCount
       };
     });
+    Gifffer();
   };
 
   handleFetchError = error => {
@@ -140,6 +147,7 @@ class Search extends React.Component {
       this.throttleFunction
     );
     window.onpopstate = null;
+    window.removeEventListener("load", this.handleLoad);
   }
 }
 

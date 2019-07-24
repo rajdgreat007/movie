@@ -29,3 +29,17 @@
   height: 90vh;
   width: 100%;
 }
+
+@media (max-width: 720px) {
+  .Search .Logo {
+    width: 100%;
+  }
+
+  .Search .Logo img {
+    width: 50%;
+  }
+
+  .Search .SearchBar {
+    width: 100%;
+  }
+}

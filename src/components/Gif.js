@@ -20,7 +20,11 @@ class Gif extends React.Component {
   render() {
     return (
       <div className="Gif" style={{ gridRowEnd: `span ${this.state.rows}` }}>
-        <img ref={this.imageRef} src={this.props.src} alt={this.props.alt} />
+        <img
+          ref={this.imageRef}
+          data-gifffer={this.props.src}
+          alt={this.props.alt}
+        />
       </div>
     );
   }

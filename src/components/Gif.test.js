@@ -19,9 +19,9 @@ describe("Gif Component", () => {
     expect(GifComponent.state().rows).toEqual(0);
   });
 
-  it("sets image src when passed through props", () => {
+  it("sets image data-grifffer attribute when passed through props", () => {
     const imgSrc = "www.abc.com/awesome.gif";
     GifComponent.setProps({ src: imgSrc });
-    expect(GifComponent.find("img").prop("src")).toEqual(imgSrc);
+    expect(GifComponent.find("img").prop("data-gifffer")).toEqual(imgSrc);
   });
 });
