@@ -169,6 +169,13 @@ class Search extends React.Component {
       );
     window.onpopstate = null;
     window.removeEventListener("load", this.handleLoad);
+
+    //stop all pending image requests
+    if (window.stop !== undefined) {
+      window.stop();
+    } else if (document.execCommand !== undefined) {
+      document.execCommand("Stop", false);
+    }
   }
 }
 

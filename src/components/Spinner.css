@@ -5,6 +5,8 @@
   left: 0;
   right: 0;
   bottom: 0;
+  width: 80%;
+  margin: 0 auto;
 }
 
 .Spinner {
@@ -35,5 +37,8 @@
 @media (max-width: 768px) {
   .SpinnerContainer {
     top: 96px;
+    width: auto;
+    margin: 10px;
+    margin-bottom: -10px;
   }
 }
