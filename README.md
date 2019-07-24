@@ -40,6 +40,12 @@ It is responsible for rendering search box on Home & Search pages. It can be con
 
 # Any extra works that you made and why it is important.
 
+## Responsive for all screens
+
+## Spinner while the page is loading
+
+for improved user experience
+
 ## Scroll Pagination
 
 helps user to effortlessly see content just by scrolling and without clicking any button

@@ -15,6 +15,7 @@ class Gif extends React.Component {
   onLoadImage = () => {
     const height = this.imageRef.current.clientHeight;
     this.setState({ rows: Math.ceil(height / 10) });
+    if (this.props.lastImage) this.props.onLastImageLoaded();
   };
 
   render() {

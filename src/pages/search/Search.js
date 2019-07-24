@@ -9,6 +9,7 @@ import { getUrl, LIMIT, useMockData } from "../../utils/utils";
 import mockImagesFn from "../../mock/images";
 import "./Search.css";
 import logo from "../../logo.png";
+import Spinner from "../../components/Spinner";
 
 class Search extends React.Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class Search extends React.Component {
 
     this.state = {
       ...this.defaultState,
+      loading: false,
       searchTerm: this.props.match.params.searchTerm
     };
 
@@ -49,6 +51,10 @@ class Search extends React.Component {
     Gifffer();
   };
 
+  onLastImageLoaded = () => {
+    this.setState({ loading: false });
+  };
+
   handleScroll = () => {
     const container = this.containerRef.current;
     if (
@@ -57,7 +63,6 @@ class Search extends React.Component {
       !this.state.fetching &&
       this.state.offset < this.state.totalCount
     ) {
-      this.setState({ fetching: true });
       this.fetchData();
     }
   };
@@ -98,7 +103,10 @@ class Search extends React.Component {
       return;
     }
 
-    if (this.state.searchTerm) {
+    if (this.state.searchTerm && !this.state.fetching) {
+      this.setState(prevState => {
+        return { fetching: true, loading: true };
+      });
       const url = getUrl(this.state.searchTerm, this.state.offset, LIMIT);
       axios
         .get(url)
@@ -133,10 +141,18 @@ class Search extends React.Component {
 
         <SearchBar onSearchSubmit={this.onSearchSubmit} />
         <div className="Gifs" ref={this.containerRef}>
-          {this.state.gifs.map(gif => {
-            return <Gif src={gif.images.original.url} key={gif.id} />;
+          {this.state.gifs.map((gif, idx) => {
+            return (
+              <Gif
+                src={gif.images.original.url}
+                key={gif.id}
+                onLastImageLoaded={this.onLastImageLoaded}
+                lastImage={this.state.gifs.length === idx + 1}
+              />
+            );
           })}
         </div>
+        {this.state.loading && <Spinner />}
       </div>
     );
   }

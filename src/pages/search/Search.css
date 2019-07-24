@@ -5,7 +5,7 @@
 }
 
 .Search .Logo {
-  width: 13%;
+  width: 200px;
 }
 
 .Search .Logo img {
@@ -13,7 +13,7 @@
 }
 
 .Search .SearchBar {
-  width: 87%;
+  flex: 1;
 }
 
 .Search .SearchInput {
@@ -30,13 +30,13 @@
   width: 100%;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 768px) {
   .Search .Logo {
     width: 100%;
   }
 
   .Search .Logo img {
-    width: 50%;
+    width: 200px;
   }
 
   .Search .SearchBar {
