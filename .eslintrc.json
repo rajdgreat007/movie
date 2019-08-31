@@ -1,5 +1,11 @@
 {
-  "extends": ["airbnb", "prettier", "prettier/react"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:jest/recommended",
+    "airbnb",
+    "prettier"
+  ],
   "plugins": ["prettier"],
   "rules": {
     "react/jsx-filename-extension": [

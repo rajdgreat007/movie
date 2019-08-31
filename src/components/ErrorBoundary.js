@@ -6,7 +6,7 @@ class ErrorBoundary extends React.Component {
     this.state = { error: false };
   }
 
-  static getDerivedStateFromError(err) {
+  static getDerivedStateFromError() {
     return { error: true };
   }
 
@@ -15,12 +15,14 @@ class ErrorBoundary extends React.Component {
   // }
 
   render() {
-    return this.state.error ? (
+    const { error } = this.state;
+    const { children } = this.props;
+    return error ? (
       <div>
         <p>Oops, something went wrong</p>
       </div>
     ) : (
-      this.props.children
+      children
     );
   }
 }

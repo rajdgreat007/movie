@@ -24,13 +24,14 @@ describe("Search Component", () => {
   });
 
   it("renders mock images", () => {
-    const defaultState = (SearchComponent.instance.defaultState = {
+    const defaultState = {
       gifs: mockImagesFn(),
       offset: 0,
       fetching: false,
       searchTerm: "happy",
       totalCount: 100
-    });
+    };
+    SearchComponent.instance.defaultState = defaultState;
     SearchComponent.setState(defaultState);
     expect(SearchComponent.state().gifs).toHaveLength(20);
   });

@@ -6,15 +6,20 @@ import "./Home.css";
 import logo from "../../logo.png";
 
 class Home extends React.Component {
-  state = { redirect: false };
-  searchTerm = "";
+  constructor(props) {
+    super(props);
+    this.state = { redirect: false };
+    this.searchTerm = "";
+  }
+
   onSearchSubmit = searchTerm => {
     this.searchTerm = searchTerm;
     this.setState({ redirect: true });
   };
 
   render() {
-    if (this.state.redirect) {
+    const { redirect } = this.state;
+    if (redirect) {
       return <Redirect to={`/search/${this.searchTerm}`} />;
     }
     return (

@@ -2,24 +2,31 @@ import React from "react";
 import "./SearchBar.css";
 
 class SearchBar extends React.Component {
-  state = { searchTerm: "" };
+  constructor(props) {
+    super(props);
+    this.state = { searchTerm: "" };
+  }
 
   onFormSubmit = e => {
+    const { onSearchSubmit } = this.props;
+    const { searchTerm } = this.state;
     e.preventDefault();
-    this.props.onSearchSubmit(this.state.searchTerm);
+    onSearchSubmit(searchTerm);
   };
 
   render() {
+    const { searchTerm } = this.state;
     return (
       <div className="SearchBar">
         <form onSubmit={this.onFormSubmit}>
           <input
             type="text"
             className="SearchInput"
-            value={this.state.searchTerm}
+            value={searchTerm}
             onChange={e => this.setState({ searchTerm: e.target.value })}
-            onClick={e => this.setState({ searchTerm: "" })}
+            onClick={() => this.setState({ searchTerm: "" })}
             placeholder="Search for awesome gifs"
+            // eslint-disable-next-line jsx-a11y/no-autofocus
             autoFocus
           />
           <button type="submit" className="SearchButton">

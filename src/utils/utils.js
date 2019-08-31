@@ -1,7 +1,7 @@
 const GIPHY_API_ENDPOINT = "https://api.giphy.com/v1/gifs/search";
 const API_KEY = "26VJbgRGEw7u4JGqzve3TvzflmNUYbRK";
 
-export const useMockData = false; //setting it to true will load images stored locally, used for dev purpose
+export const useMockData = false; // setting it to true will load images stored locally, used for dev purpose
 
 export const LIMIT = 20;
 
