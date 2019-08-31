@@ -1,5 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
+import ErrorBoundary from "../../components/ErrorBoundary";
 import SearchBar from "../../components/SearchBar";
 import "./Home.css";
 import logo from "../../logo.png";
@@ -21,7 +22,9 @@ class Home extends React.Component {
         <header className="Home-header">
           <img src={logo} className="Logo" alt="logo" />
         </header>
-        <SearchBar onSearchSubmit={this.onSearchSubmit} />
+        <ErrorBoundary>
+          <SearchBar onSearchSubmit={this.onSearchSubmit} />
+        </ErrorBoundary>
       </div>
     );
   }

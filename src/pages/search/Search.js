@@ -3,6 +3,7 @@ import axios from "axios";
 import Gifffer from "gifffer";
 import { Redirect } from "react-router-dom";
 import throttle from "lodash.throttle";
+import ErrorBoundary from "../../components/ErrorBoundary";
 import Gif from "../../components/Gif";
 import SearchBar from "../../components/SearchBar";
 import { getUrl, LIMIT, useMockData } from "../../utils/utils";
@@ -143,7 +144,9 @@ class Search extends React.Component {
           <img src={logo} alt="logo" />
         </div>
 
-        <SearchBar onSearchSubmit={this.onSearchSubmit} />
+        <ErrorBoundary>
+          <SearchBar onSearchSubmit={this.onSearchSubmit} />
+        </ErrorBoundary>
         <div className="Gifs" ref={this.containerRef}>
           {this.state.gifs.map((gif, idx) => {
             return (
