@@ -1,5 +1,6 @@
 import React from "react";
 import Select from "./Select";
+import "./Discover.css";
 
 const typeOptions = ["Movie", "Music"];
 const ratingOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];

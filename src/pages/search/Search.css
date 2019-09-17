@@ -32,15 +32,6 @@
   width: 80%;
 }
 
-.Discover {
-  width: 20%;
-  align-self: flex-start;
-}
-
-.Discover .form-group{
-  margin-bottom: 10px;
-}
-
 .Links {
   display: flex;
   justify-content: space-between;

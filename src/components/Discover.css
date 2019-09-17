@@ -1,0 +1,28 @@
+.Discover {
+  width: 20%;
+  align-self: flex-start;
+  padding-left: 30px;
+  box-sizing: border-box;
+}
+
+.Discover .form-group{
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.Discover .form-group label, .Discover .form-group select{
+  width: 50%;
+}
+
+.Discover .form-group label{
+  text-align: left;
+}
+
+.Discover .form-group select{
+  height: 30px;
+  border: 1px solid #00b4cc;
+  background: #00b4cc;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+}
