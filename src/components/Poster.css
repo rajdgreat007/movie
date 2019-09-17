@@ -1,0 +1,8 @@
+
+.Poster img {
+  width: 300px;
+}
+
+.Poster .title, .Poster .year{
+  padding: 5px;
+}

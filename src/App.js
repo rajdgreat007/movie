@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, BrowserRouter as Router } from "react-router-dom";
-import Home from "./pages/home/Home";
 import Search from "./pages/search/Search";
 import "./App.css";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -10,8 +9,11 @@ function App() {
     <div className="App">
       <ErrorBoundary>
         <Router>
-          <Route path="/" exact component={Home} />
-          <Route path="/search/:searchTerm" component={Search} />
+          <Route path="/" exact component={Search} />
+          <Route path="/popular" component={Search} />
+          <Route path="/trending" component={Search} />
+          <Route path="/newest" component={Search} />
+          <Route path="/toprated" component={Search} />
         </Router>
       </ErrorBoundary>
     </div>

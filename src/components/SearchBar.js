@@ -25,9 +25,7 @@ class SearchBar extends React.Component {
             value={searchTerm}
             onChange={e => this.setState({ searchTerm: e.target.value })}
             onClick={() => this.setState({ searchTerm: "" })}
-            placeholder="Search for awesome gifs"
-            // eslint-disable-next-line jsx-a11y/no-autofocus
-            autoFocus
+            placeholder="Search..."
           />
           <button type="submit" className="SearchButton">
             <i className="material-icons">search</i>
