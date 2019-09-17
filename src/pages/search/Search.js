@@ -74,7 +74,7 @@ class Search extends React.Component {
   filterByGenre = genreId => {
     if (genreId) {
       const filteredPosters =
-        this.state.posters.filter(poster => {
+        this.state.postersCopy.filter(poster => {
           if (!poster.genre_ids) return false;
           return poster.genre_ids.includes(genreId);
         }) || [];
