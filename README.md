@@ -8,7 +8,7 @@ Run `npm install`
 
 Run dev server - `npm start`
 
-Navigate to [`http://localhost:3000`](http://localhost:3000) to view the running application
+Navigate to [`http://localhost:3000/popular`](http://localhost:3000/popular) to view the running application
 
 
 ## Code Quality
