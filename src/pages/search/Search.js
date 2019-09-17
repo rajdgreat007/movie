@@ -1,10 +1,10 @@
 import React from "react";
 import axios from "axios";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import ErrorBoundary from "../../components/ErrorBoundary";
 import Poster from "../../components/Poster";
 import SearchBar from "../../components/SearchBar";
-import { getUrl, getImageUrl } from "../../utils/utils";
+import { getUrl, getImageUrl, getYear } from "../../utils/utils";
 import "./Search.css";
 import Spinner from "../../components/Spinner";
 import Discover from "../../components/Discover";
@@ -15,9 +15,9 @@ class Search extends React.Component {
 
     this.state = {
       posters: [],
-      searchTerm: "popular",
+      searchTerm: "",
       loading: false,
-      sortBy: props.match.path.replace("/","")
+      sortBy: props.match.path.replace("/", "") || "popular"
     };
   }
 
@@ -26,21 +26,22 @@ class Search extends React.Component {
   }
 
   handleFetchResponse = response => {
-    this.setState({posters: response.data.results});
-    this.setState({loading:false});
+    const posters = response.data.results;
+    this.setState({ posters, loading: false, postersCopy: posters });
   };
 
   handleFetchError = error => {
     console.log(error);
-    this.setState({loading:false});
+    this.setState({ loading: false });
   };
 
-  fetchData = () => {
+  fetchData = (search, query) => {
     const { sortBy } = this.state;
 
     if (sortBy) {
-      this.setState({loading:true});
-      const url = getUrl(sortBy+".desc");
+      this.setState({ loading: true });
+      let url = getUrl(sortBy + ".desc");
+      if (search) url = getUrl(sortBy + ".desc", true, query);
       axios
         .get(url)
         .then(response => this.handleFetchResponse(response))
@@ -50,27 +51,75 @@ class Search extends React.Component {
 
   onSearchSubmit = searchTerm => {
     if (searchTerm) {
-      const filteredPosters = this.state.posters.filter((poster)=>{
-        if(!poster.title) return false;
-        const title = poster.title.toLowerCase();
-        return title.includes(searchTerm.toLowerCase());
-      }) || [];
-
-      this.setState({
-        posters: filteredPosters
-      })
-      
+      this.setState({ searchTerm }, () => {
+        this.fetchData(true, searchTerm);
+      });
     }
   };
 
+  filterByRating = rating => {
+    if (rating) {
+      const filteredPosters =
+        this.state.postersCopy.filter(poster => {
+          if (!poster.vote_average) return false;
+          return poster.vote_average >= rating;
+        }) || [];
+
+      this.setState({
+        posters: filteredPosters
+      });
+    }
+  };
+
+  filterByGenre = genreId => {
+    if (genreId) {
+      const filteredPosters =
+        this.state.posters.filter(poster => {
+          if (!poster.genre_ids) return false;
+          return poster.genre_ids.includes(genreId);
+        }) || [];
+
+      this.setState({
+        posters: filteredPosters
+      });
+    }
+  };
+
+  filterByYear = year => {
+    if (year) {
+      const filteredPosters =
+        this.state.postersCopy.filter(poster => {
+          if (!poster.release_date) return false;
+          const itemYear = getYear(poster.release_date);
+          return year == itemYear;
+        }) || [];
+
+      this.setState({
+        posters: filteredPosters
+      });
+    }
+  };
+
+  getYears = posters => {
+    const years = [];
+    posters &&
+      posters.forEach(poster => {
+        if (poster.release_date) {
+          const year = getYear(poster.release_date);
+          if (!years.includes(year)) {
+            years.push(year);
+          }
+        }
+      });
+    return years;
+  };
+
   render() {
-    const {posters, loading } = this.state;
+    const { posters, loading, postersCopy } = this.state;
     return (
       <div className="Search">
         <div className="TopBar">
-          <div className="Logo">
-            Discover
-          </div>
+          <div className="Logo">Discover</div>
 
           <div className="Links">
             <Link to="/popular">Popular</Link>
@@ -84,10 +133,12 @@ class Search extends React.Component {
           </ErrorBoundary>
         </div>
         <div className="Posters">
-          {posters.map((poster) => {
+          {posters.map(poster => {
             return (
               <Poster
-                src={getImageUrl(poster.poster_path || "/zfE0R94v1E8cuKAerbskfD3VfUt.jpg")}
+                src={getImageUrl(
+                  poster.poster_path || "/zfE0R94v1E8cuKAerbskfD3VfUt.jpg"
+                )}
                 key={poster.id}
                 title={poster.title}
                 release={poster.release_date}
@@ -96,7 +147,13 @@ class Search extends React.Component {
             );
           })}
         </div>
-        <Discover />
+        <Discover
+          years={this.getYears(postersCopy)}
+          onChangeYear={year => this.filterByYear(year)}
+          onChangeRating={rating => {
+            this.filterByRating(rating);
+          }}
+        />
         {loading && <Spinner />}
       </div>
     );

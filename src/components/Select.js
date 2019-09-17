@@ -1,31 +1,39 @@
-import React from 'react';
+import React from "react";
 
 class SelectBox extends React.Component {
   constructor(props) {
     super(props);
-    
-    this.state = { value: 'Select an Option'};
+    this.state = { value: "Select an Option" };
   }
 
   onChange(e) {
+    const { onChange } = this.props;
     this.setState({
       value: e.target.value
-    })
+    });
+    onChange(e.target.value);
   }
 
   render() {
-    const {label, options} = this.props;
+    const { label, options } = this.props;
     return (
       <div className="form-group">
         <label htmlFor="select2">{label}</label>
-        <select value={this.state.value} onChange={this.onChange.bind(this)} className="form-control">
+        <select
+          value={this.state.value}
+          onChange={this.onChange.bind(this)}
+          className="form-control"
+        >
           {options.map(option => {
-            return <option value={option} key={option} >{option}</option>
+            return (
+              <option value={option} key={option}>
+                {option}
+              </option>
+            );
           })}
         </select>
       </div>
-      
-    )
+    );
   }
 }
 
